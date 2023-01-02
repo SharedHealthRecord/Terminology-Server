@@ -40,9 +40,9 @@ task extractWar(dependsOn: ['downloadMRSWar'], type: Copy) {
 def properties = new Properties()
 properties.setProperty("SERVER_PORT", "9080")
 properties.setProperty("BASE_DIR", "${buildDir}")
-properties.setProperty("CONTEXT_PATH", "openmrs")
+properties.setProperty("CONTEXT_PATH", "/openmrs")
 properties.setProperty("WAR_DIRECTORY", "${buildDir}/openmrs")
-properties.setProperty("OPENMRS_RUNTIME_PROPERTIES_FILE", "${projectDir}/local/openmrs-runtime.properties")
+properties.setProperty("MODULE_REPO", "${projectDir}/modules")
 
 task launch(dependsOn: ['build', 'extractWar'], type: JavaExec) {
     main "org.freeshr.terminology.launch.Main"
@@ -68,6 +68,7 @@ jar {
 task execute(dependsOn: 'build', type: JavaExec) {
     main = "org.freeshr.terminology.launch.Main"
     classpath = sourceSets.main.runtimeClasspath
+    environment properties
     standardOutput = System.out
 }
 
@@ -129,7 +130,7 @@ task dist(dependsOn: ['build','downloadMRSWar','normalizeJarName'], type: Rpm) {
         into '.'
     }
 
-    from("${projectDir}/resources/placeholder") {
+    from("${projectDir}/modules/") {
         fileMode = 0755
         createDirectoryEntry = true
         into 'modules'

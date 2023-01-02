@@ -8,6 +8,8 @@ ln -s /opt/bdshr-terminology-server/bin/bdshr-terminology-server /etc/init.d/bds
 ln -s /opt/bdshr-terminology-server/run /var/run/bdshr-terminology-server
 ln -s /opt/bdshr-terminology-server/openmrs /var/run/bdshr-terminology-server/openmrs
 ln -s /opt/bdshr-terminology-server/log /var/log/bdshr-terminology-server
+mkdir /root/.OpenMRS
+ln -s /opt/bdshr-terminology-server/modules /root/.OpenMRS/modules
 
 (cd /opt/bdshr-terminology-server/openmrs && unzip ../openmrs.war)
 
